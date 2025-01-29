@@ -20,6 +20,9 @@ void draw(Globals* globs)
     };
     vkBeginCommandBuffer(cmd,&beginInfo);
 
+    // Cubemap DS Fits Around Here
+
+
     globs->text->update(cmd);
 
     globs->framebuffer->beginRenderPassClearContents(cmd, 0.2f, 0.4f, 0.6f, 1.0f );

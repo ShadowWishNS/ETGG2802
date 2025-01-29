@@ -20,6 +20,9 @@ class DescriptorSetLayout;
 class DescriptorSet;
 class DescriptorSetFactory;
 class PipelineLayout;
+class GraphicsPipeline;
+class Image;
+
 
 
 namespace gltf{
@@ -53,4 +56,11 @@ class Globals{
     DescriptorSetLayout* descriptorSetLayout;
     PipelineLayout* pipelineLayout;
     DescriptorSetFactory* descriptorSetFactory;
+
+    // For Skyboxes
+    GraphicsPipeline* skyPipe;
+    Image* interiorEnv;
+    Image* exteriorEnv;
+    gltf::Mesh* skyBox;
+
 };
