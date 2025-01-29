@@ -99,6 +99,7 @@
     <ClInclude Include="Samplers.h" />
     <ClInclude Include="setup.h" />
     <ClInclude Include="ShaderManager.h" />
+    <ClInclude Include="shaders\importantconstants.h" />
     <ClInclude Include="Stopwatch.h" />
     <ClInclude Include="Text.h" />
     <ClInclude Include="timeutil.h" />
@@ -108,6 +109,19 @@
     <ClInclude Include="VertexManager.h" />
     <ClInclude Include="vk.h" />
     <ClInclude Include="vkhelpers.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="shaders\main.frag" />
+    <None Include="shaders\main.vert" />
+    <None Include="shaders\sky.frag" />
+    <None Include="shaders\sky.vert" />
+    <None Include="shaders\text.frag" />
+    <None Include="shaders\text.vert" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="shaders\pushconstants.txt" />
+    <Text Include="shaders\textpushconstants.txt" />
+    <Text Include="shaders\uniforms.txt" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>

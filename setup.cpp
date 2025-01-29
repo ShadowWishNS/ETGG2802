@@ -93,8 +93,10 @@ void setup(Globals* globs)
                                 BASE_TEXTURE_SLOT ),
             DescriptorSetEntry( VK_DESCRIPTOR_TYPE_SAMPLED_IMAGE,
                                 EMISSIVE_TEXTURE_SLOT ),
-            DescriptorSetEntry(VK_DESCRIPTOR_TYPE_SAMPLED_IMAGE,
+            DescriptorSetEntry( VK_DESCRIPTOR_TYPE_SAMPLED_IMAGE,
                                 NORMAL_TEXTURE_SLOT),
+            DescriptorSetEntry( VK_DESCRIPTOR_TYPE_SAMPLED_IMAGE,
+                                METALLICROUGHNESS_TEXTURE_SLOT),
         }
     );
 

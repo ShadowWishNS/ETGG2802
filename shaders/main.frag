@@ -19,6 +19,7 @@ layout(set=0,binding=MIPMAP_SAMPLER_SLOT) uniform sampler mipSampler;
 layout(set=0,binding=BASE_TEXTURE_SLOT) uniform texture2DArray baseTexture;
 layout(set=0,binding=EMISSIVE_TEXTURE_SLOT) uniform texture2DArray emitTexture;
 layout(set=0,binding=NORMAL_TEXTURE_SLOT) uniform texture2DArray normalTexture;
+layout(set=0,binding=METALLICROUGHNESS_TEXTURE_SLOT) uniform texture2DArray metallicRoughnessTexture;
 
 #define AMBIENT_ABOVE vec3(0.3,0.3,0.3)
 #define AMBIENT_BELOW vec3(0.1,0.1,0.1)

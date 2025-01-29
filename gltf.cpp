@@ -23,6 +23,9 @@ class Material{
     Image* emissiveTexture;
     float normalFactor;
     Image* normalTexture;
+    Image* metallicRoughnessTexture;
+    float metallicFactor;
+    int roughnessFactor;
 };
 
 class Primitive{
@@ -55,10 +58,13 @@ class Primitive{
         dset->setSlot( BASE_TEXTURE_SLOT, this->material.baseColorTexture->view() );
         dset->setSlot( EMISSIVE_TEXTURE_SLOT, this->material.emissiveTexture->view() );
         dset->setSlot(NORMAL_TEXTURE_SLOT, this->material.normalTexture->view());
+        dset->setSlot(METALLICROUGHNESS_TEXTURE_SLOT, this->material.metallicRoughnessTexture->view());
         dset->bind(cmd);
-        pushc->set(cmd,"baseColorFactor",this->material.baseColorFactor);
-        pushc->set(cmd,"emissiveFactor",this->material.emissiveFactor);
+        pushc->set(cmd,"baseColorFactor", this->material.baseColorFactor);
+        pushc->set(cmd,"emissiveFactor", this->material.emissiveFactor);
         pushc->set(cmd, "normalFactor", this->material.normalFactor);
+        pushc->set(cmd, "metallicFactor", this->material.metallicFactor);
+        pushc->set(cmd, "roughnessFactor", this->material.roughnessFactor);
         vkCmdDrawIndexed(
             cmd,
             this->drawinfo.numIndices,
@@ -207,6 +213,7 @@ Material parseMaterial( const json11::Json& J, std::vector<char>& binaryData, in
     json11::Json metallicRoughness = material["pbrMetallicRoughness"];
 
     Material M;
+    // Metallic Roughness Parameters
     if( metallicRoughness.hasKey("baseColorFactor") ){
         M.baseColorFactor.x =  metallicRoughness["baseColorFactor"][0];
         M.baseColorFactor.y =  metallicRoughness["baseColorFactor"][1];
@@ -215,17 +222,32 @@ Material parseMaterial( const json11::Json& J, std::vector<char>& binaryData, in
     } else {
         M.baseColorFactor = vec4(1,1,1,1);
     }
-
-    if(  metallicRoughness.hasKey("baseColorTexture") ){
-        M.baseColorTexture = loadTexture(
+    if( metallicRoughness.hasKey("metallicRoughnessTexture") ){
+        M.metallicRoughnessTexture = loadTexture(
             J, binaryData,
-            metallicRoughness["baseColorTexture"]["index"]
+            metallicRoughness["metallicRoughnessTexture"]["index"]
         );
-    } else {
+    } 
+    else {
         //default color = white
-        M.baseColorTexture = ImageManager::createSolidColorImage(1,1,1,1);
+        M.metallicRoughnessTexture = ImageManager::createSolidColorImage(1,1,1,1);
+    }
+    if (metallicRoughness.hasKey("metallicFactor")) {
+        M.metallicFactor = metallicRoughness["metallicFactor"];
+    }
+    else {
+        //default = 1.0
+        M.metallicFactor = 1.0f;
+    }
+    if (metallicRoughness.hasKey("roughnessFactor")) {
+        M.roughnessFactor = metallicRoughness["roughnessFactor"];
+    }
+    else {
+        //default = 1.0
+        M.roughnessFactor = 1.0f;
     }
 
+    // Emissive Parameters
     if( material.hasKey("emissiveFactor" ) ){
         M.emissiveFactor.x =  material["emissiveFactor"][0];
         M.emissiveFactor.y =  material["emissiveFactor"][1];
@@ -242,6 +264,7 @@ Material parseMaterial( const json11::Json& J, std::vector<char>& binaryData, in
         M.emissiveTexture = ImageManager::createSolidColorImage(1,1,1,1);
     }
 
+    // Normal Parameters
     if (material.hasKey("normalTexture")) {
         int idx = material["normalTexture"]["index"];
         M.normalTexture = loadTexture(J, binaryData, idx);

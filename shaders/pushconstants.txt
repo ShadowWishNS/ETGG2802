@@ -3,4 +3,6 @@ layout(push_constant,row_major) uniform pushConstants {
     vec4 baseColorFactor;
     vec3 emissiveFactor;
     float normalFactor;
+    float metallicFactor;
+    float roughnessFactor;
 };
